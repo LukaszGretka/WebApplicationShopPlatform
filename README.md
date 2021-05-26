@@ -17,7 +17,7 @@ How to install and configurate docker on Linux machine: https://docs.docker.com/
 3. Start Postgres database <br/> 
 
 Run docker service (if not working): </br>
-``` sudo service docker start ``
+``` sudo service docker start ```
 Run postgres image:</br>
 ``` sudo docker run -p 5432:5432 -e POSTGRES_PASSWORD=dev0000 postgres:9.6.21-alpine ```
 
@@ -30,5 +30,5 @@ By using database client (for example pgAdmin), try to connect to database. If d
 
 5. Update Database <br/> 
 Go to project folder (in this case WebApplicationShopPlatform.Identity), open console window and type: <br/>
-``` dotnet ef database update ``
+``` dotnet ef database update ```
 Note: With the further project's development, powershell script will be added to automate the database creation process.
