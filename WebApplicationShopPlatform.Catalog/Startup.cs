@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,8 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplicationShopPlatform.Catalog.Data;
+using WebApplicationShopPlatform.Catalog.Services;
+using WebApplicationShopPlatform.Catalog.Services.Abstract;
 
-namespace WebApplicationShopPlatform.Product
+namespace WebApplicationShopPlatform.Catalog
 {
     public class Startup
     {
@@ -22,13 +26,16 @@ namespace WebApplicationShopPlatform.Product
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-        }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            services.AddDbContext<ProductDatabaseContext>(options =>
+                        options.UseNpgsql(Configuration.GetConnectionString("Postgres.ConnectionString"),
+                        npgSqlOptions => npgSqlOptions.SetPostgresVersion(new Version(9, 6, 21))));
+
+            services.AddScoped<IProductService, ProductService>();
+        }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -44,7 +51,7 @@ namespace WebApplicationShopPlatform.Product
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

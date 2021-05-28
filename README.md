@@ -1,6 +1,6 @@
-# Web Application Shop Platform
+# Web Application Shop Platform (WASP)
 
-Backend template for efficient creating online shopping platforms.
+Template for efficient creating online shopping platforms.
 Powered by .NET Core 3.1
 
 # Installation
@@ -15,7 +15,6 @@ How to install and configurate docker on Linux machine: https://docs.docker.com/
 ``` sudo docker pull postgres:9.6.21-alpine ```
 
 3. Start Postgres database <br/> 
-
 Run docker service (if not working): </br>
 ``` sudo service docker start ```
 Run postgres image:</br>
