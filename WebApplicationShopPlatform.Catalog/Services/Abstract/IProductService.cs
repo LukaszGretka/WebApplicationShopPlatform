@@ -11,6 +11,10 @@ namespace WebApplicationShopPlatform.Catalog.Services.Abstract
 
         Task<IEnumerable<Product>> GetProductByName(string name);
 
-        Task<DatabaseActionResult<Product>> AddProduct(Product product);
+        Task<DatabaseActionResult<Product>> Create(Product product);
+
+        Task<DatabaseActionResult<Product>> Update(int id, Product product);
+
+        Task<DatabaseActionResult<Product>> DeleteById(int id);
     }
 }

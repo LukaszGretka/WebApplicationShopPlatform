@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace WebApplicationShopPlatform.Catalog.Models
 {
     public class DatabaseActionResult<T> where T: class
@@ -9,12 +11,14 @@ namespace WebApplicationShopPlatform.Catalog.Models
 
         internal T Obj { get; private set; }
 
+        internal Exception Exception { get; private set; }
 
-        public DatabaseActionResult(bool success, string message = "", T obj = null)
+        public DatabaseActionResult(bool success, string message = "", T obj = null, Exception exception = null)
         {
             Success = success;
             Message = message;
             Obj = obj;
+            Exception = exception;
         }
     }
 }

@@ -31,8 +31,8 @@ namespace WebApplicationShopPlatform.Catalog.Services
         {
             return await _productDbContext.Products.Where(product => product.Name.Equals(name)).ToListAsync();
         }
-
-        public async Task<DatabaseActionResult<Product>> AddProduct(Product product)
+        
+        public async Task<DatabaseActionResult<Product>> Create(Product product)
         {
             try
             {
@@ -42,10 +42,63 @@ namespace WebApplicationShopPlatform.Catalog.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return new DatabaseActionResult<Product>(false, ex.Message);
+                return new DatabaseActionResult<Product>(false, exception: ex);
             }
 
             return new DatabaseActionResult<Product>(true, obj: product);
+        }
+
+        public async Task<DatabaseActionResult<Product>> Update(int id, Product product)
+        {
+            _productDbContext.Entry(product).State = EntityState.Modified;
+
+            Product productToUpdate = await _productDbContext.Products.FindAsync(id);
+
+            if (productToUpdate is null)
+            {
+                return new DatabaseActionResult<Product>(false, "Product no found");
+            }
+
+            productToUpdate.Name = product.Name;
+            productToUpdate.Description = product.Description;
+            productToUpdate.Amount = product.Amount;
+            productToUpdate.GrossPrice = product.GrossPrice;
+            productToUpdate.NetPrice = product.NetPrice;
+
+            try
+            {
+                await _productDbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                _logger.LogError(ex.Message);
+                return new DatabaseActionResult<Product>(false, exception: ex);
+            }
+
+            return new DatabaseActionResult<Product>(true);
+        }
+
+        public async Task<DatabaseActionResult<Product>> DeleteById(int id)
+        {
+            Product foundProduct = await _productDbContext.Products.FindAsync(id);
+
+            if (foundProduct is null)
+            {
+                return new DatabaseActionResult<Product>(false, "Product no found");
+            }
+
+            try
+            {
+                _productDbContext.Products.Remove(foundProduct);
+                await _productDbContext.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException ex)
+            {
+                _logger.LogError(ex.Message);
+                return new DatabaseActionResult<Product>(false, exception: ex);
+            }
+
+            return new DatabaseActionResult<Product>(true);
         }
     }
 }
