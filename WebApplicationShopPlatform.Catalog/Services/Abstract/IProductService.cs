@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApplicationShopPlatform.Catalog.DTO;
+using WebApplicationShopPlatform.Catalog.DTO.Enums;
 using WebApplicationShopPlatform.Catalog.Models;
 
 namespace WebApplicationShopPlatform.Catalog.Services.Abstract
@@ -9,7 +10,9 @@ namespace WebApplicationShopPlatform.Catalog.Services.Abstract
     {
         Task<Product> GetProductById(int id);
 
-        Task<IEnumerable<Product>> GetProductByName(string name);
+        Task<IEnumerable<Product>> GetProductsByName(string name);
+
+        Task<IEnumerable<Product>> GetProductsByCategory(Category category);
 
         Task<DatabaseActionResult<Product>> Create(Product product);
 

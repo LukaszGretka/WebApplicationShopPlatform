@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplicationShopPlatform.Catalog.Data;
 using WebApplicationShopPlatform.Catalog.DTO;
+using WebApplicationShopPlatform.Catalog.DTO.Enums;
 using WebApplicationShopPlatform.Catalog.Models;
 using WebApplicationShopPlatform.Catalog.Services.Abstract;
 
@@ -27,11 +28,16 @@ namespace WebApplicationShopPlatform.Catalog.Services
             return await _productDbContext.Products.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Product>> GetProductByName(string name)
+        public async Task<IEnumerable<Product>> GetProductsByName(string name)
         {
             return await _productDbContext.Products.Where(product => product.Name.Equals(name)).ToListAsync();
         }
-        
+
+        public async Task<IEnumerable<Product>> GetProductsByCategory(Category category)
+        {
+            return await _productDbContext.Products.Where(product => product.Category == category).ToListAsync();
+        }
+
         public async Task<DatabaseActionResult<Product>> Create(Product product)
         {
             try
@@ -50,20 +56,18 @@ namespace WebApplicationShopPlatform.Catalog.Services
 
         public async Task<DatabaseActionResult<Product>> Update(int id, Product product)
         {
-            _productDbContext.Entry(product).State = EntityState.Modified;
+            Product existingProduct = await _productDbContext.Products.FindAsync(product.ID);
 
-            Product productToUpdate = await _productDbContext.Products.FindAsync(id);
-
-            if (productToUpdate is null)
+            if (existingProduct is null)
             {
                 return new DatabaseActionResult<Product>(false, "Product no found");
             }
 
-            productToUpdate.Name = product.Name;
-            productToUpdate.Description = product.Description;
-            productToUpdate.Amount = product.Amount;
-            productToUpdate.GrossPrice = product.GrossPrice;
-            productToUpdate.NetPrice = product.NetPrice;
+            existingProduct.Name = string.IsNullOrWhiteSpace(product.Name) ? existingProduct.Name : product.Name;
+            existingProduct.Description = string.IsNullOrWhiteSpace(product.Description) ? existingProduct.Description : product.Description;
+            existingProduct.Category = product.Category ?? existingProduct.Category;
+            existingProduct.Amount = product.Amount ?? existingProduct.Amount;
+            existingProduct.NetPrice = product.NetPrice ?? existingProduct.NetPrice;
 
             try
             {

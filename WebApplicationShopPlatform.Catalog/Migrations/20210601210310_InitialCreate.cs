@@ -15,14 +15,20 @@ namespace WebApplicationShopPlatform.Catalog.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(maxLength: 50, nullable: true),
                     Description = table.Column<string>(maxLength: 150, nullable: true),
-                    Amount = table.Column<int>(nullable: false),
-                    NetPrice = table.Column<decimal>(nullable: false),
-                    GrossPrice = table.Column<decimal>(nullable: false)
+                    Category = table.Column<int>(nullable: true),
+                    Amount = table.Column<int>(nullable: true),
+                    NetPrice = table.Column<decimal>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.ID);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_Name",
+                table: "Products",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

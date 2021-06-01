@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebApplicationShopPlatform.Catalog.DTO.Enums;
 
 namespace WebApplicationShopPlatform.Catalog.DTO
 {
@@ -13,10 +14,10 @@ namespace WebApplicationShopPlatform.Catalog.DTO
         [MaxLength(150)]
         public string Description { get; set; }
 
-        public int Amount { get; set; }
+        public Category? Category { get; set; }
 
-        public decimal NetPrice { get; set; }
+        public int? Amount { get; set; }
 
-        public decimal GrossPrice { get; set; }
+        public decimal? NetPrice { get; set; }
     }
 }
