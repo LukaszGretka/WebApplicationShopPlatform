@@ -1,6 +1,6 @@
-# Web Application Shop Platform
+# Web Application Shop Platform (WASP)
 
-Backend template for efficient creating online shopping platforms.
+Template for efficient creating online shopping platforms.
 Powered by .NET Core 3.1
 
 # Installation
@@ -15,18 +15,19 @@ How to install and configurate docker on Linux machine: https://docs.docker.com/
 ``` sudo docker pull postgres:9.6.21 ```
 
 3. Start Postgres database <br/> 
-``` sudo docker run -p 127.0.0.1:5432:5432 -e POSTGRES_PASSWORD=db-password postgres:9.6.21 ```
+Run docker service (if not working): </br>
+``` sudo service docker start ```
+Run postgres image:</br>
+``` sudo docker run -p 5432:5432 -e POSTGRES_PASSWORD=dev0000 postgres:9.6.21-alpine ```
 
-4. Check if database accept connection.
-By using database client (for example pgAdmin https://www.pgadmin.org/download/), try to connect to database by using following credentials:
-IP = 127.0.0.1
-port = 5432
-username: postgres
-password: db-password
+4. Check if database accept connection. <br/> 
+Type in Windows shell (for example PowerShell) <br/>
+``` wsl hostname -I ``` <br/>
+to get WSL IP address. <br/>
+You may also use localhost as a host name
+By using database client (for example pgAdmin), try to connect to database. If db accept the connection, replace IP address in connection string, which is located in appseting.json<br/>
 
-5. Migrate database
-Use
-``` update-database ``` 
-command to perform database migration from Package Manager Console in Visual Studio or simply open any shell at project folder and then by using command
-``` dotnet ef database update```
-update your database to the latest migration version (for this case EF Core command-line tool has to be installed https://docs.microsoft.com/pl-pl/ef/core/cli/dotnet)
+5. Update Database <br/> 
+Go to project folder (in this case WebApplicationShopPlatform.Identity), open console window and type: <br/>
+``` dotnet ef database update ```
+Note: With the further project's development, powershell script will be added to automate the database creation process.
