@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplicationShopPlatform.Catalog.Data;
 using WebApplicationShopPlatform.Catalog.DTO;
-using WebApplicationShopPlatform.Catalog.DTO.Enums;
 using WebApplicationShopPlatform.Catalog.Models;
 using WebApplicationShopPlatform.Catalog.Services.Abstract;
+using WebApplicationShopPlatform.Shared.Enums;
 
 namespace WebApplicationShopPlatform.Catalog.Services
 {
@@ -23,22 +23,22 @@ namespace WebApplicationShopPlatform.Catalog.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<Product> GetProductById(int id)
+        public async Task<ProductDTO> GetProductById(int id)
         {
             return await _productDbContext.Products.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByName(string name)
+        public async Task<IEnumerable<ProductDTO>> GetProductsByName(string name)
         {
             return await _productDbContext.Products.Where(product => product.Name.Equals(name)).ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByCategory(Category category)
+        public async Task<IEnumerable<ProductDTO>> GetProductsByCategory(Category category)
         {
             return await _productDbContext.Products.Where(product => product.Category == category).ToListAsync();
         }
 
-        public async Task<DatabaseActionResult<Product>> Create(Product product)
+        public async Task<DatabaseActionResult<ProductDTO>> Create(ProductDTO product)
         {
             try
             {
@@ -48,19 +48,19 @@ namespace WebApplicationShopPlatform.Catalog.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return new DatabaseActionResult<Product>(false, exception: ex);
+                return new DatabaseActionResult<ProductDTO>(false, exception: ex);
             }
 
-            return new DatabaseActionResult<Product>(true, obj: product);
+            return new DatabaseActionResult<ProductDTO>(true, obj: product);
         }
 
-        public async Task<DatabaseActionResult<Product>> Update(int id, Product product)
+        public async Task<DatabaseActionResult<ProductDTO>> Update(int id, ProductDTO product)
         {
-            Product existingProduct = await _productDbContext.Products.FindAsync(product.ID);
+            ProductDTO existingProduct = await _productDbContext.Products.FindAsync(product.ID);
 
             if (existingProduct is null)
             {
-                return new DatabaseActionResult<Product>(false, "Product no found");
+                return new DatabaseActionResult<ProductDTO>(false, "Product no found");
             }
 
             existingProduct.Name = string.IsNullOrWhiteSpace(product.Name) ? existingProduct.Name : product.Name;
@@ -76,19 +76,19 @@ namespace WebApplicationShopPlatform.Catalog.Services
             catch (DbUpdateConcurrencyException ex)
             {
                 _logger.LogError(ex.Message);
-                return new DatabaseActionResult<Product>(false, exception: ex);
+                return new DatabaseActionResult<ProductDTO>(false, exception: ex);
             }
 
-            return new DatabaseActionResult<Product>(true);
+            return new DatabaseActionResult<ProductDTO>(true);
         }
 
-        public async Task<DatabaseActionResult<Product>> DeleteById(int id)
+        public async Task<DatabaseActionResult<ProductDTO>> DeleteById(int id)
         {
-            Product foundProduct = await _productDbContext.Products.FindAsync(id);
+            ProductDTO foundProduct = await _productDbContext.Products.FindAsync(id);
 
             if (foundProduct is null)
             {
-                return new DatabaseActionResult<Product>(false, "Product no found");
+                return new DatabaseActionResult<ProductDTO>(false, "Product no found");
             }
 
             try
@@ -99,10 +99,10 @@ namespace WebApplicationShopPlatform.Catalog.Services
             catch(DbUpdateConcurrencyException ex)
             {
                 _logger.LogError(ex.Message);
-                return new DatabaseActionResult<Product>(false, exception: ex);
+                return new DatabaseActionResult<ProductDTO>(false, exception: ex);
             }
 
-            return new DatabaseActionResult<Product>(true);
+            return new DatabaseActionResult<ProductDTO>(true);
         }
     }
 }

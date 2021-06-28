@@ -12,11 +12,11 @@ namespace WebApplicationShopPlatform.Catalog.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Product>()
+            builder.Entity<ProductDTO>()
                    .HasIndex(u => u.Name)
                    .IsUnique();
         }
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductDTO> Products { get; set; }
     }
 }

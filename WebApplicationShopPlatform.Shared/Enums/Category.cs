@@ -1,8 +1,8 @@
-﻿namespace WebApplicationShopPlatform.Catalog.DTO.Enums
+﻿namespace WebApplicationShopPlatform.Shared.Enums
 {
     public enum Category
     {
-        Computers,
+        Computers = 1,
         Smartphones,
         Peripherals
     }

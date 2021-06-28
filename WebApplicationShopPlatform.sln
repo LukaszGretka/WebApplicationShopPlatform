@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationShopPlatform.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationShopPlatform.Order", "WebApplicationShopPlatform.Order\WebApplicationShopPlatform.Order.csproj", "{2EE22F48-436E-44E3-8860-A63B6A3AE276}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationShopPlatform.Shared", "WebApplicationShopPlatform.Shared\WebApplicationShopPlatform.Shared.csproj", "{7B0DAA3D-64D1-4BB1-A538-71A3B62E3865}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{2EE22F48-436E-44E3-8860-A63B6A3AE276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EE22F48-436E-44E3-8860-A63B6A3AE276}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EE22F48-436E-44E3-8860-A63B6A3AE276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B0DAA3D-64D1-4BB1-A538-71A3B62E3865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B0DAA3D-64D1-4BB1-A538-71A3B62E3865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B0DAA3D-64D1-4BB1-A538-71A3B62E3865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B0DAA3D-64D1-4BB1-A538-71A3B62E3865}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

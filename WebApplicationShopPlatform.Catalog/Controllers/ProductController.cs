@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApplicationShopPlatform.Catalog.DTO;
-using WebApplicationShopPlatform.Catalog.DTO.Enums;
 using WebApplicationShopPlatform.Catalog.Models;
 using WebApplicationShopPlatform.Catalog.Services.Abstract;
+using WebApplicationShopPlatform.Shared.Enums;
 
 namespace WebApplicationShopPlatform.Catalog.Controllers
 {
@@ -27,9 +27,9 @@ namespace WebApplicationShopPlatform.Catalog.Controllers
         [HttpGet]
         [Route("{id}")]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
-        public async Task<ActionResult<Product>> GetById(int Id)
+        public async Task<ActionResult<ProductDTO>> GetById(int Id)
         {
-            Product product = await _productService.GetProductById(Id);
+            ProductDTO product = await _productService.GetProductById(Id);
 
             if (product is null)
             {
@@ -42,14 +42,14 @@ namespace WebApplicationShopPlatform.Catalog.Controllers
         [HttpGet]
         [Route("category/{categoryId}")]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
-        public async Task<ActionResult<IEnumerable<Product>>> GetByCategory(int categoryId)
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetByCategory(int categoryId)
         {
             if(!Enum.IsDefined(typeof(Category), categoryId))
             {
                 return BadRequest(new { Message = "Invaid category number" });
             }
 
-            IEnumerable<Product> products = await _productService.GetProductsByCategory((Category)categoryId);
+            IEnumerable<ProductDTO> products = await _productService.GetProductsByCategory((Category)categoryId);
 
             if (products is null)
             {
@@ -61,9 +61,9 @@ namespace WebApplicationShopPlatform.Catalog.Controllers
 
         [HttpGet]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
-        public async Task<ActionResult<IEnumerable<Product>>> GetById([FromQuery] string name)
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetById([FromQuery] string name)
         {
-            IEnumerable<Product> products = await _productService.GetProductsByName(name);
+            IEnumerable<ProductDTO> products = await _productService.GetProductsByName(name);
 
             if (products is null)
             {
@@ -76,9 +76,9 @@ namespace WebApplicationShopPlatform.Catalog.Controllers
         // TODO: only for manager role (need implementation of indentity)
         [HttpPost]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Post))]
-        public async Task<IActionResult> Create(Product product)
+        public async Task<IActionResult> Create(ProductDTO product)
         {
-            DatabaseActionResult<Product> result = await _productService.Create(product);
+            DatabaseActionResult<ProductDTO> result = await _productService.Create(product);
 
             if (result.Exception != null)
             {
@@ -92,14 +92,14 @@ namespace WebApplicationShopPlatform.Catalog.Controllers
         [HttpPut]
         [Route("{id}")]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Put))]
-        public async Task<IActionResult> Update(int id, Product product)
+        public async Task<IActionResult> Update(int id, ProductDTO product)
         {
             if (id != product.ID)
             {
                 return BadRequest();
             }
 
-            DatabaseActionResult<Product> result = await _productService.Update(id, product);
+            DatabaseActionResult<ProductDTO> result = await _productService.Update(id, product);
 
             if (result.Exception != null)
             {
@@ -120,7 +120,7 @@ namespace WebApplicationShopPlatform.Catalog.Controllers
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Delete))]
         public async Task<IActionResult> Delete(int id)
         {
-            DatabaseActionResult<Product> result = await _productService.DeleteById(id);
+            DatabaseActionResult<ProductDTO> result = await _productService.DeleteById(id);
 
             if (result.Exception != null)
             {

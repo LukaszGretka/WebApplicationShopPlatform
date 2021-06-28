@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WebApplicationShopPlatform.Catalog.DTO.Enums;
+using WebApplicationShopPlatform.Shared.Enums;
 
 namespace WebApplicationShopPlatform.Catalog.DTO
 {
-    public class Product
+    public class ProductDTO
     {
         [Key]
         public int ID { get; set; }
