@@ -8,6 +8,6 @@ namespace WebApplicationShopPlatform.Order.Models
 {
     public class OrderProducts
     {
-        public Product Product{ get; set; }        
+        public List<Product> Products { get; set; }
     }
 }

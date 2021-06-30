@@ -2,13 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebApplicationShopPlatform.Order.Models;
+using WebApplicationShopPlatform.Order.Models.Results;
 using WebApplicationShopPlatform.Order.Queries;
+using WebApplicationShopPlatform.Shared.Models;
 
 namespace WebApplicationShopPlatform.Order.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;
@@ -20,10 +24,16 @@ namespace WebApplicationShopPlatform.Order.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<IActionResult> ProcessOrder()
+        [HttpPost]
+        [Route("process")]
+        public async Task<IActionResult> ProcessOrder(Guid userId, [FromBody] OrderProducts orderProducts)
         {
-            var result = await _mediator.Send(new ProcessOrderQuery());
-
+            ProcessOrderResult result = await _mediator.Send(new ProcessOrderQuery
+            { 
+                UserId = userId,
+                Products = orderProducts.Products
+            });
+                
             return Ok(result);
         }
 

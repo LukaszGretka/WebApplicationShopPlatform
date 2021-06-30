@@ -4,9 +4,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using WebApplicationShopPlatform.Order.Data;
 using WebApplicationShopPlatform.Order.DTOs;
+using WebApplicationShopPlatform.Order.Enums;
 using WebApplicationShopPlatform.Order.Models.Results;
 using WebApplicationShopPlatform.Order.Queries;
 using WebApplicationShopPlatform.Order.Services.Abstract;
+using WebApplicationShopPlatform.Shared.Models;
 
 namespace WebApplicationShopPlatform.Order.Handlers
 {
@@ -23,17 +25,16 @@ namespace WebApplicationShopPlatform.Order.Handlers
 
         public async Task<ProcessOrderResult> Handle(ProcessOrderQuery request, CancellationToken cancellationToken)
         {
-            var result = new ProcessOrderResult();
-
-            _ordersDbRepository.AddOrder(new OrderDTO
+            DatabaseActionResult<OrderDTO> result = await _ordersDbRepository.AddOrder(new OrderDTO
             {
-
+                ShippingStatus = ShippingStatus.New,
+                Date = DateTime.Now,
+                Paid = false,
+                UserId = request.UserId,
                 TotalPrice = _orderService.CalculateTotalPrice(request.Products)
             });
 
-
-
-            return result;
+            return new ProcessOrderResult { IsSuccess = result.Success };
         }
     }
 }

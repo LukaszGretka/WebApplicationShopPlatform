@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplicationShopPlatform.Order.Data.Context;
 using WebApplicationShopPlatform.Order.DTOs;
+using WebApplicationShopPlatform.Shared.Models;
 
 namespace WebApplicationShopPlatform.Order.Data
 {
@@ -19,14 +20,25 @@ namespace WebApplicationShopPlatform.Order.Data
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public OrderDTO AddOrder(OrderDTO order)
+        public async Task<DatabaseActionResult<OrderDTO>> AddOrder(OrderDTO order)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _orderDbContext.AddAsync(order);
+                await _orderDbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new DatabaseActionResult<OrderDTO>(false, exception: ex);
+            }
+
+            return new DatabaseActionResult<OrderDTO>(true);
         }
 
-        public OrderDTO GetOrderById(int Id)
+        public async Task<OrderDTO> GetOrderById(int id)
         {
-            throw new NotImplementedException();
+            return await _orderDbContext.Orders.FindAsync(id);
         }
     }
 }

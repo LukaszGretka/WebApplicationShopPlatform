@@ -1,4 +1,5 @@
-﻿using WebApplicationShopPlatform.Shared.Enums;
+﻿using System.Collections.Generic;
+using WebApplicationShopPlatform.Shared.Enums;
 
 namespace WebApplicationShopPlatform.Shared.Models
 {

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplicationShopPlatform.Catalog.Data;
 using WebApplicationShopPlatform.Catalog.DTO;
-using WebApplicationShopPlatform.Catalog.Models;
 using WebApplicationShopPlatform.Catalog.Services.Abstract;
 using WebApplicationShopPlatform.Shared.Enums;
+using WebApplicationShopPlatform.Shared.Models;
 
 namespace WebApplicationShopPlatform.Catalog.Services
 {

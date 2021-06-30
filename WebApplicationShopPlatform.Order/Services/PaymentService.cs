@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplicationShopPlatform.Order.Services.Abstract;
 
 namespace WebApplicationShopPlatform.Order.Services
 {
-    public class PaymentService
+    public class PaymentService : IPaymentService
     {
         // process payment
         // wait for confirmation
