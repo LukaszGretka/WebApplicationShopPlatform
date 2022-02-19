@@ -1,0 +1,62 @@
+<div class="main-container">
+  <app-nav-menu></app-nav-menu>
+  <nav class="navbar navbar-light bg-light">
+
+    <div class="dropdown">
+      <button type="button" class="btn btn-outline-light bg-info dropdown-toggle" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Category
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="#">Category 1</a></li>
+        <li><a class="dropdown-item" href="#">Category 2</a></li>
+        <li><a class="dropdown-item" href="#">Category 3</a></li>
+      </ul>
+    </div>
+
+    <form class="d-flex">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-light bg-info" type="submit">Search</button>
+    </form>
+  </nav>
+
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="assets/30_keyboard_banner.png" class="d-block w-100" alt="Keyboard">
+      </div>
+      <div class="carousel-item">
+        <img src="assets/new_samsung_banner.png" class="d-block w-100">
+      </div>
+      <div class="carousel-item">
+        <img src="assets/free_delivery_banner.png" class="d-block w-100">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <h2>Top Products</h2>
+
+  <div class="card-group">
+    <div *ngFor="let card of productCards">
+    <app-product-card></app-product-card>
+  </div>
+  </div>
+</div>
