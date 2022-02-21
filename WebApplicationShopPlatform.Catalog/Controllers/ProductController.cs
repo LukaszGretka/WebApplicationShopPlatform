@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApplicationShopPlatform.Catalog.DTO;
 using WebApplicationShopPlatform.Catalog.Services.Abstract;
 using WebApplicationShopPlatform.Shared.Enums;
 using WebApplicationShopPlatform.Shared.Models;
@@ -44,7 +43,7 @@ namespace WebApplicationShopPlatform.Catalog.Controllers
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetByCategory(int categoryId)
         {
-            if(!Enum.IsDefined(typeof(Category), categoryId))
+            if (!Enum.IsDefined(typeof(Category), categoryId))
             {
                 return BadRequest(new { Message = "Invaid category number" });
             }
@@ -85,7 +84,7 @@ namespace WebApplicationShopPlatform.Catalog.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
-            return CreatedAtAction(nameof(Create), new { id = result.Obj.ID }, result.Obj);
+            return CreatedAtAction(nameof(Create), new { id = result.Obj.Id }, result.Obj);
         }
 
         // TODO: only for manager role (need implementation of indentity)
@@ -94,7 +93,7 @@ namespace WebApplicationShopPlatform.Catalog.Controllers
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Put))]
         public async Task<IActionResult> Update(int id, ProductDTO product)
         {
-            if (id != product.ID)
+            if (id != product.Id)
             {
                 return BadRequest();
             }

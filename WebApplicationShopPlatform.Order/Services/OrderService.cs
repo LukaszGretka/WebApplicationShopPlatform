@@ -8,12 +8,12 @@ namespace WebApplicationShopPlatform.Order.Services
 {
     public class OrderService : IOrderService
     {
-        public decimal CalculateTotalPrice(IList<Product> products)
+        public decimal CalculateTotalPrice(IList<ProductDTO> products)
         {
             throw new NotImplementedException();
         }
 
-        public float CalculateTotalWeigth(IList<Product> products)
+        public float CalculateTotalWeigth(IList<ProductDTO> products)
         {
             throw new NotImplementedException();
         }

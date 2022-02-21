@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApplicationShopPlatform.Catalog.DTO;
 using WebApplicationShopPlatform.Shared.Enums;
 using WebApplicationShopPlatform.Shared.Models;
 

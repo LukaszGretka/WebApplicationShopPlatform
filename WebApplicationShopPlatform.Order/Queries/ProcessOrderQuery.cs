@@ -8,7 +8,7 @@ namespace WebApplicationShopPlatform.Order.Queries
 {
     public class ProcessOrderQuery : IRequest<ProcessOrderResult>
     {
-        public IList<Product> Products { get; set; }
+        public IList<ProductDTO> Products { get; set; }
 
         public Guid UserId { get; set; }
     }

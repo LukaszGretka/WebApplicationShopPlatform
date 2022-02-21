@@ -13,8 +13,8 @@ namespace WebApplicationShopPlatform.Order.Services.Abstract
 
         public ProcessOrderResult ProcessOrder();
 
-        public decimal CalculateTotalPrice(IList<Product> products);
+        public decimal CalculateTotalPrice(IList<ProductDTO> products);
 
-        public float CalculateTotalWeigth(IList<Product> products);
+        public float CalculateTotalWeigth(IList<ProductDTO> products);
     }
 }

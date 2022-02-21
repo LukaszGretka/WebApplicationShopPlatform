@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApplicationShopPlatform.Catalog.DTO;
+using WebApplicationShopPlatform.Catalog.Models;
 
 namespace WebApplicationShopPlatform.Catalog.Data
 {
@@ -12,11 +12,11 @@ namespace WebApplicationShopPlatform.Catalog.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<ProductDTO>()
+            builder.Entity<Product>()
                    .HasIndex(u => u.Name)
                    .IsUnique();
         }
 
-        public DbSet<ProductDTO> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
