@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20220311165805_new_changes.cs" />
+    <Compile Remove="Migrations\20220311165805_new_changes.Designer.cs" />
+    <Compile Remove="Migrations\20220311183258_FixCategoryId.cs" />
+    <Compile Remove="Migrations\20220311183258_FixCategoryId.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.15">
       <PrivateAssets>all</PrivateAssets>
@@ -15,6 +22,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebApplicationShopPlatform.Shared\WebApplicationShopPlatform.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 
 

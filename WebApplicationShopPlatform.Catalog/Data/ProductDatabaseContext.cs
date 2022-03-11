@@ -10,13 +10,21 @@ namespace WebApplicationShopPlatform.Catalog.Data
         {
         }
 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Product>()
+                        .HasOne<Category>()
+                        .WithMany()
+                        .HasForeignKey(p => p.CategoryId);
+
             builder.Entity<Product>()
                    .HasIndex(u => u.Name)
                    .IsUnique();
         }
 
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<Category> Category { get; set; }
     }
 }
