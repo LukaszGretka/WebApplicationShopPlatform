@@ -6,16 +6,16 @@ namespace WebApplicationShopPlatform.Catalog.Models
     public class Product
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Name { get; set; }
 
-        [MaxLength(150)]
+        [MaxLength(300)]
         public string Description { get; set; }
 
         [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        public int CategoryId { get; set; }
 
         public int Amount { get; set; }
 

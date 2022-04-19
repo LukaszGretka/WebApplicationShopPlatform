@@ -8,6 +8,7 @@ using WebApplicationShopPlatform.Catalog.Data;
 using WebApplicationShopPlatform.Catalog.Models;
 using WebApplicationShopPlatform.Catalog.Services.Abstract;
 using WebApplicationShopPlatform.Shared.Models;
+using WebApplicationShopPlatform.Shared.ModelsDTO;
 
 namespace WebApplicationShopPlatform.Catalog.Services
 {
@@ -22,36 +23,32 @@ namespace WebApplicationShopPlatform.Catalog.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<ProductDTO> GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
-            Product product = await _productDbContext.Products.FindAsync(id);
-            return new ProductDTO
+            return await _productDbContext.Products.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsByName(string name)
+        {
+            return await _productDbContext.Products.Where(product => product.Name.Equals(name)).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsByCategory(int categordyId)
+        {
+            return await _productDbContext.Products.Where(product => product.CategoryId == categordyId).ToListAsync();
+        }
+
+        public async Task<DatabaseActionResult<Product>> Create(ProductDTO productDTO)
+        {
+            var product = new Product
             {
-                Amount = product.Amount,
-                Category = (Shared.Enums.Category)product.Category.Id,
-                Description = product.Description,
-                Id = product.ID,
-                Name = product.Name,
-                NetPrice = product.NetPrice
+                Name = productDTO.Name,
+                Description = productDTO.Description,
+                CategoryId = productDTO.CategoryId,
+                Amount = (int)(productDTO.Amount),
+                NetPrice = (decimal)productDTO?.NetPrice
             };
-        }
 
-        public async Task<IEnumerable<ProductDTO>> GetProductsByName(string name)
-        {
-            List<Product> products = await _productDbContext.Products.Where(product => product.Name.Equals(name)).ToListAsync();
-
-            return ProductDTOWrapper(products);
-        }
-
-        public async Task<IEnumerable<ProductDTO>> GetProductsByCategory(Shared.Enums.Category category)
-        {
-            List<Product> products = await _productDbContext.Products.Where(product => product.Category.Id == (int)category).ToListAsync();
-
-            return ProductDTOWrapper(products);
-        }
-
-        public async Task<DatabaseActionResult<ProductDTO>> Create(ProductDTO product)
-        {
             try
             {
                 await _productDbContext.AddAsync(product);
@@ -60,26 +57,26 @@ namespace WebApplicationShopPlatform.Catalog.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return new DatabaseActionResult<ProductDTO>(false, exception: ex);
+                return new DatabaseActionResult<Product>(false, exception: ex);
             }
 
-            return new DatabaseActionResult<ProductDTO>(true, obj: product);
+            return new DatabaseActionResult<Product>(true, obj: product);
         }
 
-        public async Task<DatabaseActionResult<ProductDTO>> Update(int id, ProductDTO product)
+        public async Task<DatabaseActionResult<Product>> Update(int id, ProductDTO productDTO)
         {
-            Product existingProduct = await _productDbContext.Products.FindAsync(product.Id);
+            Product existingProduct = await _productDbContext.Products.FindAsync(id);
 
             if (existingProduct is null)
             {
-                return new DatabaseActionResult<ProductDTO>(false, "Product no found");
+                return new DatabaseActionResult<Product>(false, "Product no found");
             }
 
-            existingProduct.Name = string.IsNullOrWhiteSpace(product.Name) ? existingProduct.Name : product.Name;
-            existingProduct.Description = string.IsNullOrWhiteSpace(product.Description) ? existingProduct.Description : product.Description;
-            existingProduct.Category.Id = product.Category.HasValue ? (int)product.Category.Value : existingProduct.Category.Id;
-            existingProduct.Amount = product.Amount ?? existingProduct.Amount;
-            existingProduct.NetPrice = product.NetPrice ?? existingProduct.NetPrice;
+            existingProduct.Name = string.IsNullOrWhiteSpace(productDTO.Name) ? existingProduct.Name : productDTO.Name;
+            existingProduct.Description = string.IsNullOrWhiteSpace(productDTO.Description) ? existingProduct.Description : productDTO.Description;
+            existingProduct.CategoryId = string.IsNullOrEmpty(productDTO.CategoryId.ToString()) ? productDTO.CategoryId : existingProduct.CategoryId;
+            existingProduct.Amount = productDTO.Amount ?? existingProduct.Amount;
+            existingProduct.NetPrice = productDTO.NetPrice ?? existingProduct.NetPrice;
 
             try
             {
@@ -88,19 +85,19 @@ namespace WebApplicationShopPlatform.Catalog.Services
             catch (DbUpdateConcurrencyException ex)
             {
                 _logger.LogError(ex.Message);
-                return new DatabaseActionResult<ProductDTO>(false, exception: ex);
+                return new DatabaseActionResult<Product>(false, exception: ex);
             }
 
-            return new DatabaseActionResult<ProductDTO>(true);
+            return new DatabaseActionResult<Product>(true);
         }
 
-        public async Task<DatabaseActionResult<ProductDTO>> DeleteById(int id)
+        public async Task<DatabaseActionResult<Product>> DeleteById(int id)
         {
             Product foundProduct = await _productDbContext.Products.FindAsync(id);
 
             if (foundProduct is null)
             {
-                return new DatabaseActionResult<ProductDTO>(false, "Product no found");
+                return new DatabaseActionResult<Product>(false, "Product no found");
             }
 
             try
@@ -111,27 +108,10 @@ namespace WebApplicationShopPlatform.Catalog.Services
             catch (DbUpdateConcurrencyException ex)
             {
                 _logger.LogError(ex.Message);
-                return new DatabaseActionResult<ProductDTO>(false, exception: ex);
+                return new DatabaseActionResult<Product>(false, exception: ex);
             }
 
-            return new DatabaseActionResult<ProductDTO>(true);
-        }
-
-        private List<ProductDTO> ProductDTOWrapper(List<Product> products)
-        {
-            List<ProductDTO> productsDto = new List<ProductDTO>();
-
-            products.ForEach(x => productsDto.Add(new ProductDTO
-            {
-                Amount = x.Amount,
-                Category = (Shared.Enums.Category)x.Category.Id,
-                Description = x.Description,
-                Id = x.ID,
-                Name = x.Name,
-                NetPrice = x.NetPrice
-            }));
-
-            return productsDto;
+            return new DatabaseActionResult<Product>(true);
         }
     }
 }

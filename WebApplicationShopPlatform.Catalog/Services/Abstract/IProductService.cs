@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApplicationShopPlatform.Shared.Enums;
+using WebApplicationShopPlatform.Catalog.Models;
 using WebApplicationShopPlatform.Shared.Models;
 
 namespace WebApplicationShopPlatform.Catalog.Services.Abstract
 {
     public interface IProductService
     {
-        Task<ProductDTO> GetProductById(int id);
+        Task<Product> GetProductById(int id);
 
-        Task<IEnumerable<ProductDTO>> GetProductsByName(string name);
+        Task<IEnumerable<Product>> GetProductsByName(string name);
 
-        Task<IEnumerable<ProductDTO>> GetProductsByCategory(Category category);
+        Task<IEnumerable<Product>> GetProductsByCategory(int caterogryId);
 
-        Task<DatabaseActionResult<ProductDTO>> Create(ProductDTO product);
+        Task<DatabaseActionResult<Product>> Create(ProductDTO product);
 
-        Task<DatabaseActionResult<ProductDTO>> Update(int id, ProductDTO product);
+        Task<DatabaseActionResult<Product>> Update(int id, ProductDTO product);
 
-        Task<DatabaseActionResult<ProductDTO>> DeleteById(int id);
+        Task<DatabaseActionResult<Product>> DeleteById(int id);
     }
 }

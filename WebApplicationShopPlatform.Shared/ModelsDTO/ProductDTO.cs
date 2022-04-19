@@ -1,4 +1,4 @@
-﻿using WebApplicationShopPlatform.Shared.Enums;
+﻿using WebApplicationShopPlatform.Shared.ModelsDTO;
 
 namespace WebApplicationShopPlatform.Shared.Models
 {
@@ -10,7 +10,7 @@ namespace WebApplicationShopPlatform.Shared.Models
 
         public string Description { get; set; }
 
-        public Category? Category { get; set; }
+        public int CategoryId { get; set; }
 
         public decimal? NetPrice { get; set; }
 
